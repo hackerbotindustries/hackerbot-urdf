@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot name="hbaipro">
+
+    <material name="black">
+        <color rgba="0.03 0.03 0.03 1"/>
+    </material>
+    
+    <material name="grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+    </material>
+
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+          
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.62" radius="1.62"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0.5"/>
+            <material name="black"/>
+        </visual>
+    </link>
+    
+    <link name="top_plate">
+        <visual>
+            <geometry>
+                <cylinder length="0.06" radius="1.4"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0.97"/>
+            <material name="grey"/>
+        </visual>
+    </link>
+    
+    <link name="plate">
+        <visual>
+            <geometry>
+                <cylinder length="0.1" radius="0.6"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 1.65"/>
+            <material name="white"/>
+        </visual>
+    </link>
+    
+    <link name="head_mount">
+        <visual>
+            <geometry>
+                <box size="1.34 1.34 0.68"/>
+            </geometry>        
+            <material name="black"/>
+            <origin rpy="0 0 0" xyz="0 0 1.35"/>
+        </visual>
+    </link>
+    
+    <link name="neck">
+        <visual>
+            <geometry>
+                <box size="0.5 0.25 1.59"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 1.925"/>
+            <material name="black"/>
+        </visual>
+    </link>
+    
+    <link name="head">
+        <inertial>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <mass value="1"/>
+          <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="0.43 1.2 1.3"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="-0.3 0 0"/>
+            <material name="white"/>
+        </visual>
+    </link>
+
+    <joint name="head_rotation" type="revolute">
+        <parent link="base_link"/>
+        <child link="plate"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="1000.0" lower="-2" upper="2" velocity="0.20"/>
+    </joint>
+    
+    <joint name="neck_to_plate" type="revolute">
+        <parent link="plate"/>
+        <child link="neck"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <joint name="head_vert" type="revolute">
+        <parent link="neck"/>
+        <child link="head"/>
+        <origin rpy="0 0 0" xyz="0 0 2.6"/>
+        <axis xyz="0 1 0"/>
+        <limit effort="1000" velocity="1000.00" lower="-0.257" upper="1.414"/>
+    </joint>
+
+</robot>
